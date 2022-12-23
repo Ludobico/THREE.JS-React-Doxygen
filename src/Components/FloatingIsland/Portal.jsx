@@ -12,6 +12,7 @@ import {
   WebGLRenderTarget,
 } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import FillQuad from "./FillQuad";
 
 const Portal = () => {
   const scene = new Scene();
@@ -24,6 +25,7 @@ const Portal = () => {
   );
 
   const target = new WebGLRenderTarget(window.innerWidth, window.innerHeight);
+
   window.addEventListener("resize", () => {
     target.setSize(window.innerWidth, window.innerHeight);
   });
@@ -50,12 +52,12 @@ const Portal = () => {
     let mesh = model.scene.children[0];
     mesh.material.envMapIntensity = 3.5;
 
-    let maskMesh = model.scene.children[0];
-    maskMesh.material.side = DoubleSide;
+    let maskMesh = mask.scene.children[0];
     maskMesh.material.transparent = false;
+    maskMesh.material.side = DoubleSide;
+    maskMesh.material.stencilFunc = AlwaysStencilFunc;
     maskMesh.material.stencilWrite = true;
     maskMesh.material.stencilRef = 1;
-    maskMesh.material.stencilFunc = AlwaysStencilFunc;
     maskMesh.material.stencilZPass = ReplaceStencilOp;
   }, [model, mask]);
 
@@ -63,6 +65,7 @@ const Portal = () => {
     <>
       <primitive object={model.scene} />
       <primitive object={mask.scene} />
+      <FillQuad map={target.texture} maskId={1} />
     </>
   );
 };
