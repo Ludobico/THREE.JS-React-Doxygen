@@ -9,6 +9,8 @@ import FloatingIsland from "./FloatingIsland";
 import Rocks from "./Rocks";
 import Portal from "./Portal";
 import FloatingRocks from "./FloatingRocks";
+import Trees from "./Trees";
+import Grass from "./Grass";
 
 /**
  * @author Ludobico <aqs450@gmail.com>
@@ -41,6 +43,8 @@ const SceneContainer = () => {
           <Rocks />
           <Portal />
           <FloatingRocks />
+          <Trees />
+          <Grass />
         </Canvas>
       </Suspense>
     </div>
