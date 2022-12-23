@@ -1,18 +1,48 @@
 import React from "react";
-import { useLoader } from "@react-three/fiber";
+import { useFrame, useLoader } from "@react-three/fiber";
 import { useEffect } from "react";
-import { DoubleSide } from "three";
+import {
+  AlwaysStencilFunc,
+  DoubleSide,
+  EquirectangularRefractionMapping,
+  LinearEncoding,
+  ReplaceStencilOp,
+  Scene,
+  TextureLoader,
+  WebGLRenderTarget,
+} from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 const Portal = () => {
+  const scene = new Scene();
+  scene.background = new TextureLoader().load(
+    process.env.PUBLIC_URL + "texture/galaxy.jpg",
+    (texture) => {
+      texture.encoding = LinearEncoding;
+      texture.mapping = EquirectangularRefractionMapping;
+    }
+  );
+
+  const target = new WebGLRenderTarget(window.innerWidth, window.innerHeight);
+  window.addEventListener("resize", () => {
+    target.setSize(window.innerWidth, window.innerHeight);
+  });
+
   const model = useLoader(
     GLTFLoader,
     process.env.PUBLIC_URL + "texture/model/portal.glb"
   );
+
   const mask = useLoader(
     GLTFLoader,
     process.env.PUBLIC_URL + "texture/model/portal_mask.glb"
   );
+
+  useFrame((state) => {
+    state.gl.setRenderTarget(target);
+    state.gl.render(scene, state.camera);
+    state.gl.setRenderTarget(null);
+  });
 
   useEffect(() => {
     if (!model) return;
@@ -22,6 +52,11 @@ const Portal = () => {
 
     let maskMesh = model.scene.children[0];
     maskMesh.material.side = DoubleSide;
+    maskMesh.material.transparent = false;
+    maskMesh.material.stencilWrite = true;
+    maskMesh.material.stencilRef = 1;
+    maskMesh.material.stencilFunc = AlwaysStencilFunc;
+    maskMesh.material.stencilZPass = ReplaceStencilOp;
   }, [model, mask]);
 
   return (
