@@ -33,6 +33,9 @@ const FillQuad = ({ map, maskId }) => {
     stencilFunc: EqualStencilFunc,
   };
   const materialRef = useRef();
+  useEffect(() => {
+    materialRef.current.uniforms.map.value = map;
+  }, [map]);
   return (
     <mesh>
       <planeGeometry args={[2, 2]} />
