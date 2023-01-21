@@ -1,0 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
+.postcanvas {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  background: #000000;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir,
+    helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+}
