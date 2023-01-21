@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import FirstMain from "./Components/FirstMain";
 import SceneContainer from "./Components/FloatingIsland/SceneContainer";
 import { Canvas } from "@react-three/fiber";
+import PostprocessingPro1 from "./Components/postprocessing/PostprocessingPro1";
 import PostprocessingMain from "./Components/postprocessing/PostprocessingMain";
 
 function App() {

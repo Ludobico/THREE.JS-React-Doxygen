@@ -14,6 +14,7 @@ import {
   Resizer,
   KernelSize,
   GlitchMode,
+  GlitchEffect,
 } from "postprocessing";
 
 const PostEffectComposer = () => {
