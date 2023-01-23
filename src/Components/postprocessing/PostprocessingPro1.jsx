@@ -7,17 +7,11 @@ import {
   useScroll,
 } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import React, { Suspense, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import FirstTester from "./Static/first.png";
-import Alex from "./Static/Alex.png";
 import PostEffectComposer from "./EffectComposer";
 
 const PostprocessingPro1 = () => {
-  const charState = useState(0);
-  const Loader = () => {
-    const loaderRef = useRef();
-    return <group ref={loaderRef}></group>;
-  };
   const characters = [
     {
       mugshot: FirstTester,
@@ -106,7 +100,7 @@ const PostprocessingPro1 = () => {
         >
           NEXT
         </Text> */}
-        <PostEffectComposer />
+        {/* <PostEffectComposer /> */}
       </Suspense>
     </>
   );

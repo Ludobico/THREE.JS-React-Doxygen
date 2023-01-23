@@ -10,15 +10,11 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import React, { Suspense, useRef, useState } from "react";
 import "./Postprocessing.css";
 import SecondTester from "./Static/second.png";
-import Alex from "./Static/Alex.png";
 import PostEffectComposer from "./EffectComposer";
+import useStore from "../../store/Store";
 
 const PostprocessingPro2 = () => {
-  const charState = useState(0);
-  const Loader = () => {
-    const loaderRef = useRef();
-    return <group ref={loaderRef}></group>;
-  };
+  const { ProfilePosition } = useStore();
   const characters = [
     {
       mugshot: SecondTester,
@@ -37,22 +33,38 @@ const PostprocessingPro2 = () => {
         <Image
           url={characters[0].mugshot}
           scale={[2, 4]}
-          position={[3, -7, 0]}
+          position={[3, ProfilePosition, 0]}
         />
-        <Text position={[-2, -5, 0]} fontSize={0.2} anchorX="left">
+        <Text
+          position={[-2, 2 + ProfilePosition, 0]}
+          fontSize={0.2}
+          anchorX="left"
+        >
           {characters[0].name}
         </Text>
-        <Text position={[-2, -5.4, 0]} fontSize={0.17} anchorX="left">
+        <Text
+          position={[-2, 1.6 + ProfilePosition, 0]}
+          fontSize={0.17}
+          anchorX="left"
+        >
           Classification: {characters[0].class}
         </Text>
-        <Text position={[-2, -5.8, 0]} fontSize={0.17} anchorX="left">
+        <Text
+          position={[-2, 1.2 + ProfilePosition, 0]}
+          fontSize={0.17}
+          anchorX="left"
+        >
           Employer: {characters[0].employer}
         </Text>
-        <Text position={[-2, -6.2, 0]} fontSize={0.17} anchorX="left">
+        <Text
+          position={[-2, 0.8 + ProfilePosition, 0]}
+          fontSize={0.17}
+          anchorX="left"
+        >
           occupation: {characters[0].occupation}
         </Text>
         <Text
-          position={[-2, -6.6, 0]}
+          position={[-2, 0.4 + ProfilePosition, 0]}
           fontSize={0.17}
           anchorX="left"
           anchorY="top"
@@ -60,11 +72,15 @@ const PostprocessingPro2 = () => {
         >
           {characters[0].bio}
         </Text>
-        <Text position={[-2, -8.3, 0]} fontSize={0.2} anchorX="left">
+        <Text
+          position={[-2, -1.3 + ProfilePosition, 0]}
+          fontSize={0.2}
+          anchorX="left"
+        >
           Index Key
         </Text>
         <Text
-          position={[-2, -8.5, 0]}
+          position={[-2, -1.5 + ProfilePosition, 0]}
           fontSize={0.14}
           anchorX="left"
           color="red"
