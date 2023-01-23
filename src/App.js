@@ -5,6 +5,7 @@ import SceneContainer from "./Components/FloatingIsland/SceneContainer";
 import { Canvas } from "@react-three/fiber";
 import PostprocessingPro1 from "./Components/postprocessing/PostprocessingPro1";
 import PostprocessingMain from "./Components/postprocessing/PostprocessingMain";
+import ParticleMain from "./Components/Particles/ParticleMain";
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
         <Route path="/flot" element={<SceneContainer />} />
         {/** 포스트 프로세싱 */}
         <Route path="/post" element={<PostprocessingMain />} />
+        {/** 파티클 */}
+        <Route path="/part" element={<ParticleMain />} />
       </Routes>
     </div>
   );
