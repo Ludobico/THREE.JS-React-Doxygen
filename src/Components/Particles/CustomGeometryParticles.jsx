@@ -1,10 +1,15 @@
+import { useFrame } from "@react-three/fiber";
 import React from "react";
 import { useMemo } from "react";
 import { useRef } from "react";
 import * as THREE from "three";
 
+import fragmentShader from "./FragmentShader";
+import VertexShader from "./VertexShader";
+
 const CustomGeometryParticles = (props) => {
   const { count, shape } = props;
+  const radius = 2;
 
   const points = useRef();
 
@@ -37,6 +42,42 @@ const CustomGeometryParticles = (props) => {
 
     return positions;
   }, [count, shape]);
+
+  const uniforms = useMemo(
+    () => ({
+      uTime: {
+        value: 0.0,
+      },
+      uRadius: {
+        value: radius,
+      },
+    }),
+    []
+  );
+
+  //   useFrame((state) => {
+  //     const { clock } = state;
+
+  //     for (let i = 0; i < count; i++) {
+  //       const i3 = i * 3;
+
+  //       points.current.geometry.attributes.position.array[i3] +=
+  //         Math.sin(clock.elapsedTime + Math.random() * 10) * 0.01;
+
+  //       points.current.geometry.attributes.position.array[i3 + 1] +=
+  //         Math.cos(clock.elapsedTime + Math.random() * 10) * 0.01;
+
+  //       points.current.geometry.attributes.position.array[i3 + 2] +=
+  //         Math.sin(clock.elapsedTime + Math.random() * 10) * 0.01;
+  //     }
+
+  //     points.current.geometry.attributes.position.needsUpdate = true;
+  //   });
+  useFrame((state) => {
+    const { clock } = state;
+
+    points.current.material.uniforms.uTime.value = clock.elapsedTime;
+  });
   return (
     <points ref={points}>
       <bufferGeometry>
@@ -47,11 +88,17 @@ const CustomGeometryParticles = (props) => {
           itemSize={3}
         />
       </bufferGeometry>
-      <pointsMaterial
+      {/* <pointsMaterial
         size={0.015}
         color="#5786F5"
         sizeAttenuation
         depthWrite={false}
+      /> */}
+      <shaderMaterial
+        depthWrite={false}
+        fragmentShader={fragmentShader}
+        vertexShader={VertexShader}
+        uniforms={uniforms}
       />
     </points>
   );

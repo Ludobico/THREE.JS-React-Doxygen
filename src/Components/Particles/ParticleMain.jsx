@@ -19,7 +19,7 @@ const ParticleMain = () => {
 
       {/* stel3 */}
       <CustomGeometryParticles count={2000} shape="sphere" />
-      <OrbitControls autoRotate />
+      <OrbitControls autoRotate enableZoom={false} />
     </Canvas>
   );
 };
