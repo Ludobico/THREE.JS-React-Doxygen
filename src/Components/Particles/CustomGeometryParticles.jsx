@@ -1,3 +1,4 @@
+import { PointMaterial } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import React from "react";
 import { useMemo } from "react";
