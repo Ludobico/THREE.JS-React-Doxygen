@@ -6,6 +6,7 @@ import { Canvas } from "@react-three/fiber";
 import PostprocessingPro1 from "./Components/postprocessing/PostprocessingPro1";
 import PostprocessingMain from "./Components/postprocessing/PostprocessingMain";
 import ParticleMain from "./Components/Particles/ParticleMain";
+import TridentMain from "./Components/TridentTest/TridentMain";
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
         <Route path="/post" element={<PostprocessingMain />} />
         {/** 파티클 */}
         <Route path="/part" element={<ParticleMain />} />
+        {/* 테스트 */}
+        <Route path="/trident" element={<TridentMain />} />
       </Routes>
     </div>
   );
