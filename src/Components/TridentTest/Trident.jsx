@@ -6,7 +6,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 const Computers = ({ isMobile }) => {
   // const computer = useGLTF("./desktop_pc/scene.gltf");
   // const computer = useGLTF("./testModel.glb");
-  const gltf = useLoader(GLTFLoader, "/untitled.glb");
+  const gltf = useLoader(GLTFLoader, "texture/model/untitled.glb");
 
   return (
     <mesh>
