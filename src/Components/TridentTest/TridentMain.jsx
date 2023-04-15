@@ -4,11 +4,7 @@ import Trident from "./Trident";
 import "./Trident.css";
 
 const TridentMain = () => {
-  return (
-    <Canvas>
-      <Trident />
-    </Canvas>
-  );
+  return <Trident />;
 };
 
 export default TridentMain;
