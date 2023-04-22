@@ -20,25 +20,16 @@ const Computers = ({ isMobile }) => {
   }, []);
 
   return (
-    <mesh receiveShadow>
-      {/* <hemisphereLight intensity={10.15} groundColor="black" /> */}
-      {/* <pointLight intensity={10} /> */}
-      {/* <spotLight
-        position={[0, 20, 10]}
-        angle={3.12}
-        penumbra={1}
-        intensity={1}
-        color={0xffffff}
-        castShadow
-        shadow-mapSize={1024}
-      /> */}
-      <primitive
-        object={gltf.scene}
-        scale={isMobile ? 0.6 : 0.7}
-        position={isMobile ? [0, -0, -1.7] : [0, -3.5, -1.5]}
-        rotation={[-0.01, -0.2, -0.05]}
-      />
-    </mesh>
+    <>
+      <mesh receiveShadow>
+        <primitive
+          object={gltf.scene}
+          scale={isMobile ? 0.6 : 0.7}
+          position={isMobile ? [0, -0, -1.7] : [0, -3.5, -1.5]}
+          rotation={[-0.01, -0.2, -0.05]}
+        />
+      </mesh>
+    </>
   );
 };
 
@@ -49,11 +40,14 @@ const Ground = () => {
         attach="material"
         reflectivity={1}
         receiveShadow
-        color={0xffffff}
-        emissive="white"
-        shininess={100}
+        // color={0xffffff}
+        // emissive="white"
+        // shininess={100}
+        transparent={true}
+        opacity={1}
       />
-      <planeGeometry args={[20, 20, 20]} receiveShadow />
+      {/* <planeGeometry args={[20, 20, 20]} receiveShadow /> */}
+      <circleGeometry args={[20, 20, 20]} receiveShadow />
     </mesh>
   );
 };
@@ -65,7 +59,7 @@ const Light = () => {
     <mesh castShadow>
       <spotLight
         position={[0, 20, 10]}
-        angle={0.12}
+        angle={0.1}
         penumbra={1}
         intensity={10}
         color={0xffffff}
@@ -73,6 +67,7 @@ const Light = () => {
         shadow-mapSize={1024}
         ref={spotlightref}
       />
+      {/* <directionalLight position={[0, 20, 20]} /> */}
     </mesh>
   );
 };
@@ -109,6 +104,7 @@ const Trident = () => {
           maxPolarAngle={Math.PI / 2}
           minPolarAngle={Math.PI / 2}
           rotateSpeed={0.5}
+          autoRotate
         />
         <Computers isMobile={isMobile} />
         <Ground />
