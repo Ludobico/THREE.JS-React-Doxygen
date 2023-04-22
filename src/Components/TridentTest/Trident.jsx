@@ -1,31 +1,51 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
 import React, { Suspense, useEffect, useState } from "react";
+import { MeshPhongMaterial } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 const Computers = ({ isMobile }) => {
   // const computer = useGLTF("./desktop_pc/scene.gltf");
   // const computer = useGLTF("./testModel.glb");
   const gltf = useLoader(GLTFLoader, "texture/model/untitled.glb");
+  console.log(gltf);
 
   return (
-    <mesh>
+    <mesh receiveShadow>
       <hemisphereLight intensity={10.15} groundColor="black" />
       <pointLight intensity={10} />
       <spotLight
         position={[0, 50, 10]}
         angle={0.12}
         penumbra={1}
-        intensity={1}
+        intensity={10}
+        color={0xffffff}
         castShadow
         shadow-mapSize={1024}
       />
       <primitive
         object={gltf.scene}
         scale={isMobile ? 0.6 : 0.7}
-        position={isMobile ? [0, -3, -1.7] : [0, -3.25, -1.5]}
+        position={isMobile ? [0, -0, -1.7] : [0, -3.5, -1.5]}
         rotation={[-0.01, -0.2, -0.05]}
       />
+    </mesh>
+  );
+};
+
+const Ground = () => {
+  return (
+    <mesh position={[0, -4, -1.7]} rotation-x={-Math.PI * 0.5} receiveShadow>
+      <meshPhongMaterial
+        attach="material"
+        reflectivity={1}
+        receiveShadow
+        color={0xffffff}
+        emissive="white"
+        shininess={100}
+      />
+      <planeGeometry args={[20, 20, 20]} receiveShadow />
+      {/* <meshBasicMaterial color={0xffffff} /> */}
     </mesh>
   );
 };
@@ -63,6 +83,7 @@ const Trident = () => {
         rotateSpeed={0.5}
       />
       <Computers isMobile={isMobile} />
+      <Ground />
     </Canvas>
   );
 };
