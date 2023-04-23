@@ -1,7 +1,11 @@
 import { OrbitControls, useHelper } from "@react-three/drei";
 import { Canvas, useLoader } from "@react-three/fiber";
 import React, { Suspense, useEffect, useRef, useState } from "react";
-import { MeshPhongMaterial, SpotLightHelper } from "three";
+import {
+  DirectionalLightHelper,
+  MeshPhongMaterial,
+  SpotLightHelper,
+} from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 const Computers = ({ isMobile }) => {
@@ -54,7 +58,9 @@ const Ground = () => {
 
 const Light = () => {
   const spotlightref = useRef();
-  useHelper(spotlightref, SpotLightHelper, "red");
+  const direc = useRef();
+  // useHelper(spotlightref, SpotLightHelper, "red");
+  useHelper(direc, DirectionalLightHelper, "red");
   return (
     <mesh castShadow>
       <spotLight
@@ -67,7 +73,13 @@ const Light = () => {
         shadow-mapSize={1024}
         ref={spotlightref}
       />
-      {/* <directionalLight position={[0, 20, 20]} /> */}
+      {/* <directionalLight
+        position={[0, 20, 20]}
+        ref={direc}
+        intensity={0.1}
+        castShadow
+      /> */}
+      {/* <pointLight position={[0, 20, 20]} intensity={1} castShadow /> */}
     </mesh>
   );
 };
