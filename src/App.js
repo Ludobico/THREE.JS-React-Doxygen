@@ -7,6 +7,7 @@ import PostprocessingPro1 from "./Components/postprocessing/PostprocessingPro1";
 import PostprocessingMain from "./Components/postprocessing/PostprocessingMain";
 import ParticleMain from "./Components/Particles/ParticleMain";
 import TridentMain from "./Components/TridentTest/TridentMain";
+import TridentCanvas from "./Components/TridentTest/TridentCanvas";
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
         <Route path="/part" element={<ParticleMain />} />
         {/* 테스트 */}
         <Route path="/trident" element={<TridentMain />} />
+        {/* 테스트2 */}
+        <Route path="/trident2" element={<TridentCanvas />} />
       </Routes>
     </div>
   );
