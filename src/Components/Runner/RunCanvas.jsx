@@ -6,6 +6,7 @@ import * as THREE from "three";
 import { Bloom, ChromaticAberration, EffectComposer } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
 import GroundEffect from "./GroundEffect";
+import Drops from "./Drops";
 
 const Runner = () => {
   let mixer = null;
@@ -76,6 +77,7 @@ const RunCanvas = () => {
       {/* <Floor /> */}
       <Runner />
       <GroundEffect />
+      {/* <Drops /> */}
       <EffectComposer>
         <Bloom
           blendFunction={BlendFunction.ADD}

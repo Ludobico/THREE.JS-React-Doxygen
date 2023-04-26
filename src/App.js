@@ -9,6 +9,7 @@ import ParticleMain from "./Components/Particles/ParticleMain";
 import TridentMain from "./Components/TridentTest/TridentMain";
 import TridentCanvas from "./Components/TridentTest/TridentCanvas";
 import Runmain from "./Components/Runner/Runmain";
+import DPmain from "./Components/DynamicPoint/DPmain";
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
         <Route path="/trident2" element={<TridentCanvas />} />
         {/* 러너 */}
         <Route path="/run" element={<Runmain />} />
+        {/* DP 테스트 */}
+        <Route path="/point" element={<DPmain />} />
       </Routes>
     </div>
   );

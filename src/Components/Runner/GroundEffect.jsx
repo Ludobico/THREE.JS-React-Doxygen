@@ -11,7 +11,7 @@ const GroundEffect = () => {
 
   for (let i = 0; i < rain_count; i++) {
     rainPositions[i * 3] = Math.random() * 400 - 200;
-    rainPositions[i * 3 + 1] = Math.random() * 500 - 250;
+    rainPositions[i * 3 + 1] = Math.random() * 400 - 250;
     rainPositions[i * 3 + 2] = Math.random() * 400 - 200;
   }
 
