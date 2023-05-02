@@ -5,7 +5,7 @@ import Loader from "./Loader";
 
 const DPmain = () => {
   return (
-    <Canvas gl={{ logarithmicDepthBuffer: true, antialias: true, autoClear: false }} shadows>
+    <Canvas gl={{ logarithmicDepthBuffer: true, antialias: true }} shadows>
       <Suspense fallback={<Loader />}>
         <color attach="background" args={["#15151a"]} />
         <DPmodel />
