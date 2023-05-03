@@ -1,6 +1,6 @@
 import { Environment, Lightformer, MeshReflectorMaterial, OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
 import { Bloom, ChromaticAberration, EffectComposer } from "@react-three/postprocessing";
@@ -10,57 +10,55 @@ const Runner = () => {
   let action = null;
   const gltf = useLoader(GLTFLoader, "/texture/model/FastRun.glb");
   mixer = new THREE.AnimationMixer(gltf.scene);
+  const bufferRef = useRef();
+  let Points = [];
 
-  useEffect(() => {
+  //   useEffect(() => {
+  //     action = mixer.clipAction(gltf.animations[0]);
+  //     action.play();
+  //   }, [action]);
+
+  let positions = useMemo(() => {
     action = mixer.clipAction(gltf.animations[0]);
     action.play();
-  }, [action]);
-
-  const ref = useRef();
-  const mixerRef = useRef();
-
-  let Points = [];
-  let positions = new Float32Array(Points.length * 3);
-  gltf.scene.traverse((node) => {
-    if (node.isMesh) {
-      node.castShadow = true;
-      // console.log(node.geometry.attributes.position.array);
-      let vertices = node.geometry.attributes.position.array;
-      for (let i = 0; i < vertices.length; i += 3) {
-        var point = new THREE.Vector3(vertices[i], vertices[i + 1], vertices[i + 2]);
-        Points.push(point);
+    gltf.scene.traverse((node) => {
+      if (node.isMesh) {
+        node.castShadow = true;
+        console.log(node.geometry.attributes.position.array);
+        let vertices = node.geometry.attributes.position.array;
+        for (let i = 0; i < vertices.length; i += 3) {
+          var point = new THREE.Vector3(vertices[i], vertices[i + 1], vertices[i + 2]);
+          Points.push(point);
+        }
       }
-    }
-  });
-  positions = new Float32Array(Points.length * 3);
+    });
+    return new Float32Array(Points.length * 3);
+  }, [gltf]);
 
   useFrame((state, delta) => {
-    const positions = ref.current.array;
+    mixer.update(delta);
+  });
+
+  useFrame(() => {
     for (let i = 0; i < Points.length; i++) {
       positions[i * 3] = Points[i].x;
       positions[i * 3 + 1] = Points[i].y;
       positions[i * 3 + 2] = Points[i].z;
     }
-    ref.current.needsUpdate = true;
-    mixerRef.current = mixer;
-    mixer.update(delta);
+    bufferRef.current.needsUpdate = true;
   });
-
-  // useFrame((state, delta) => {
-  //   mixerRef.current = mixer;
-  //   mixer.update(delta);
-  // });
 
   return (
     <>
       {/* <mesh position={[0, -1.161, 0]} receiveShadow>
         <primitive object={gltf.scene} scale={1.7} />
       </mesh> */}
-      <points position={[0, -1.161, 0]} ref={mixerRef}>
+      <points>
         <bufferGeometry attach="geometry">
-          <bufferAttribute attach="attributes-position" itemSize={3} array={positions} ref={ref} count={positions.length / 3} />
+          <bufferAttribute attach="attributes-position" itemSize={3} array={positions} ref={bufferRef} count={positions.length / 3} />
         </bufferGeometry>
-        <pointsMaterial attach="material" color={0xffffff} size={0.003} sizeAttenuation transparent={false} alphaTest={0.5} opacity={1.0} />
+
+        <pointsMaterial attach="material" color={0x00aaff} size={0.005} sizeAttenuation transparent={false} alphaTest={0.5} opacity={1.0} />
       </points>
     </>
   );
