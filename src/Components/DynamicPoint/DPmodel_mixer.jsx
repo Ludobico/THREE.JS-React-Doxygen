@@ -74,7 +74,8 @@ const Light = () => {
     </>
   );
 };
-const DPmodel = () => {
+
+const DPmodel_mixer = () => {
   const aspect_ratio = window.innerWidth / window.innerHeight;
   const cameraRef = useRef();
   return (
@@ -88,4 +89,4 @@ const DPmodel = () => {
   );
 };
 
-export default DPmodel;
+export default DPmodel_mixer;
