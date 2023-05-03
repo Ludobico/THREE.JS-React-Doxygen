@@ -37,14 +37,14 @@ const Runner = () => {
     ref.current.needsUpdate = true;
   });
 
-  //   useEffect(() => {
-  //     action = mixer.clipAction(gltf.animations[0]);
-  //     action.play();
-  //   }, [action]);
+  // useEffect(() => {
+  //   action = mixer.clipAction(gltf.animations[0]);
+  //   action.play();
+  // }, [action]);
 
-  //   useFrame((state, delta) => {
-  //     mixer.update(delta);
-  //   });
+  // useFrame((state, delta) => {
+  //   mixer.update(delta);
+  // });
 
   return (
     <>
@@ -53,9 +53,9 @@ const Runner = () => {
       </mesh> */}
       <points position={[0, 0, 0]}>
         <bufferGeometry attach="geometry">
-          <bufferAttribute attach="attributes-position" itemSize={3} array={positions} ref={ref} />
+          <bufferAttribute attach="attributes-position" itemSize={3} array={positions} ref={ref} count={positions.length / 3} />
         </bufferGeometry>
-        <pointsMaterial attach="material" color={0x00aaff} size={0.5} sizeAttenuation transparent={false} alphaTest={0.5} opacity={1.0} />
+        <pointsMaterial attach="material" color={0x00aaff} size={0.003} sizeAttenuation transparent={false} alphaTest={0.5} opacity={1.0} />
       </points>
     </>
   );
