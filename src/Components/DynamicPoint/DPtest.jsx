@@ -1,10 +1,24 @@
-import { Environment, Lightformer, MeshReflectorMaterial, OrbitControls, PerspectiveCamera } from "@react-three/drei";
-import { useFrame, useLoader } from "@react-three/fiber";
+import { Environment, Lightformer, MeshReflectorMaterial, OrbitControls, PerspectiveCamera, Points, useAnimations, useGLTF } from "@react-three/drei";
+import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import * as THREE from "three";
 import { Bloom, ChromaticAberration, EffectComposer } from "@react-three/postprocessing";
 import { BlendFunction } from "postprocessing";
+
+const AnimationPoint = () => {
+  const gltf = useLoader(GLTFLoader, "/texture/model/fastrun_point_cloud.glb");
+  let mixer = null;
+  let action = null;
+  mixer = new THREE.AnimationMixer(gltf.scene);
+
+  return (
+    <mesh position={[0, 0, 0]}>
+      <primitive object={gltf.scene} scale={1} />;
+    </mesh>
+  );
+};
+
 const Runner = () => {
   let mixer = null;
   let action = null;
@@ -16,13 +30,12 @@ const Runner = () => {
   useEffect(() => {
     action = mixer.clipAction(gltf.animations[0]);
     action.play();
-    console.log(action);
     gltf.scene.traverse((node) => {
       if (node.isMesh) {
-        // console.log(node.geometry.attributes.position.array);
+        console.log(node.geometry.attributes.position.array);
       }
     });
-  }, [action]);
+  });
 
   useFrame((state, delta) => {
     mixer.update(delta);
@@ -71,7 +84,8 @@ const DPtest = () => {
       <OrbitControls enableRotate={true} />
       <PerspectiveCamera makeDefault aspect={aspect_ratio} castShadow={true} far={1000} focus={10} fov={75} near={0.1} position={[2.9, 2.66, 3.07]} rotation={[-0.71, 0.62, 0.46]} />
       <Light />
-      <Runner />
+      {/* <Runner /> */}
+      <AnimationPoint />
     </>
   );
 };
